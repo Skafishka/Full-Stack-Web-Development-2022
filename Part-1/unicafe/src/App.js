@@ -9,6 +9,8 @@ const Header = (props) => {
 }
 
 const Statistics = (props) => {
+
+
   if (props.allClicks === 0) {
     return (
       <>
@@ -19,6 +21,7 @@ const Statistics = (props) => {
   }
   return (
     <>
+    
       <h1>{props.appStatistics}</h1>
       <p>good {props.good}</p>
       <p>neutral {props.neutral}</p>
@@ -30,10 +33,13 @@ const Statistics = (props) => {
   )
 }
 
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
+
 const App = () => {
 const appName = 'give feedback'
 const appStatistics = 'statistics'
-
 const [good, setGood] = useState(0)
 const [neutral, setNeutral] = useState(0)
 const [bad, setBad] = useState(0)
@@ -61,12 +67,12 @@ const badClick = () => {
   return (
     <div>
       <Header appName={appName} />
-      <button onClick={goodClick}>good</button>
-      <button onClick={neutralClick}>neutral</button>
-      <button onClick={badClick}>bad</button>
+      <Button handleClick={goodClick}text="good" />
+      <Button handleClick={neutralClick}text="neutral" />
+      <Button handleClick={badClick}text="bad" />
       <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/> 
     </div>
-  );
+  )
 }
 
 export default App;
