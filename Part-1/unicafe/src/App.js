@@ -9,6 +9,14 @@ const Header = (props) => {
 }
 
 const Statistics = (props) => {
+  if (props.allClicks === 0) {
+    return (
+      <>
+        <h1>{props.appStatistics}</h1>
+        <p>No feedback given</p>
+      </>
+    )
+  }
   return (
     <>
       <h1>{props.appStatistics}</h1>
@@ -33,7 +41,6 @@ const [allClicks, setAll] = useState([])
 const [number, setAverage] = useState(0)
 
 const goodClick = () => {
-  
   setAll(allClicks.concat(1))
   setGood(good + 1)
   setAverage(number + 1)
@@ -57,7 +64,7 @@ const badClick = () => {
       <button onClick={goodClick}>good</button>
       <button onClick={neutralClick}>neutral</button>
       <button onClick={badClick}>bad</button>
-      <Statistics appStatistics={appStatistics} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/> 
+      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/> 
     </div>
   );
 }
