@@ -8,7 +8,6 @@ const Header = (props) => {
   )
 }
 
-
 const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 )
@@ -22,16 +21,18 @@ const Statistics = (props) => {
         <p>No feedback given</p>
       </>
     )
-  } else if (props.allClicks > 0 && props.valueQ > 0) {
+  } 
+  else if (props.valueQ > 0 && props.good > 0) {
     return (
     <>
       <h1>{props.appStatistics}</h1>
-      <p>!good {props.good}</p>
+      <p>good {props.good}</p>
       <p>neutral {props.neutral}</p>
       <p>bad {props.bad}</p>
       <p>all {props.all}</p>
       <p>average {props.average}</p>
       <p>positive {props.positive} %</p>
+      
     </>
     )
   }
@@ -75,9 +76,8 @@ const submitFeedback = () => {
       <Button text="good" handleClick={goodClick}/>
       <Button text="neutral" handleClick={neutralClick} />
       <Button text="bad" handleClick={badClick} />
-      <Button text="Submitting feedback" handleClick={submitFeedback} /> 
-      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/>
-      
+      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length} valueQ={valueQ}/>
+      <Button text="Submitting feedback" handleClick={submitFeedback} />
     </div>
   )
 }
