@@ -8,9 +8,12 @@ const Header = (props) => {
   )
 }
 
+const Button = (props) => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
+
 const Statistics = (props) => {
-
-
+  
   if (props.allClicks === 0) {
     return (
       <>
@@ -18,24 +21,20 @@ const Statistics = (props) => {
         <p>No feedback given</p>
       </>
     )
-  }
-  return (
+  } else if (props.allClicks > 0 && props.valueQ > 0) {
+    return (
     <>
-    
       <h1>{props.appStatistics}</h1>
-      <p>good {props.good}</p>
+      <p>!good {props.good}</p>
       <p>neutral {props.neutral}</p>
       <p>bad {props.bad}</p>
       <p>all {props.all}</p>
       <p>average {props.average}</p>
       <p>positive {props.positive} %</p>
     </>
-  )
+    )
+  }
 }
-
-const Button = (props) => (
-  <button onClick={props.handleClick}>{props.text}</button>
-)
 
 const App = () => {
 const appName = 'give feedback'
@@ -45,6 +44,7 @@ const [neutral, setNeutral] = useState(0)
 const [bad, setBad] = useState(0)
 const [allClicks, setAll] = useState([])
 const [number, setAverage] = useState(0)
+const [valueQ, setValue] = useState(0)
 
 const goodClick = () => {
   setAll(allClicks.concat(1))
@@ -64,13 +64,19 @@ const badClick = () => {
   setAverage(number - 1)
 }
 
+const submitFeedback = () => {
+  setValue(valueQ + 1)
+}
+
   return (
     <div>
       <Header appName={appName} />
-      <Button handleClick={goodClick}text="good" />
-      <Button handleClick={neutralClick}text="neutral" />
-      <Button handleClick={badClick}text="bad" />
-      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/> 
+      <Button text="good" handleClick={goodClick}/>
+      <Button text="neutral" handleClick={neutralClick} />
+      <Button text="bad" handleClick={badClick} />
+      <Button text="Submitting feedback" handleClick={submitFeedback} /> 
+      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length}/>
+      
     </div>
   )
 }
