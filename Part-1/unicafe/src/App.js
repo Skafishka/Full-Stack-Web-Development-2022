@@ -12,30 +12,42 @@ const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 )
 
+const StatisticsLine = (props) => (
+  <>
+  <p>{props.text} average {props.value} </p>
+  </>
+)
+
 const Statistics = (props) => {
-  
   if (props.allClicks === 0) {
     return (
+      
       <>
+      
         <h1>{props.appStatistics}</h1>
         <p>No feedback given</p>
+      
       </>
+      
     )
   } 
-  else if (props.valueQ > 0 && props.good > 0) {
+  else if (props.valueQ > 0 && props.good > 0 || props.valueQ > 0 && props.bad > 0 || props.valueQ > 0 && props.neutral > 0) {
     return (
     <>
       <h1>{props.appStatistics}</h1>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
+      <StatisticsLine text="good" value={props.average}  />
+      <StatisticsLine text="neutral" value={props.average} />
+      <StatisticsLine text="bad" value={props.average} />
       <p>all {props.all}</p>
-      <p>average {props.average}</p>
-      <p>positive {props.positive} %</p>
-      
+      <p>positive {props.positive} %</p> 
     </>
     )
   }
+  return (
+    <>
+      <h1>{props.appStatistics}</h1>
+    </>
+  )
 }
 
 const App = () => {
@@ -72,12 +84,18 @@ const submitFeedback = () => {
 
   return (
     <div>
-      <Header appName={appName} />
-      <Button text="good" handleClick={goodClick}/>
-      <Button text="neutral" handleClick={neutralClick} />
-      <Button text="bad" handleClick={badClick} />
-      <Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length} valueQ={valueQ}/>
-      <Button text="Submitting feedback" handleClick={submitFeedback} />
+      <table>
+        <tr>
+          <th><Header appName={appName} /></th>
+        </tr>
+        <tr>
+          <Button text="good" handleClick={goodClick} />
+          <Button text="neutral" handleClick={neutralClick} />
+          <Button text="bad" handleClick={badClick} />
+        </tr>
+        <tr><Statistics appStatistics={appStatistics} allClicks={allClicks.length} good={good} neutral={neutral} bad={bad} all={allClicks.length} average={number / allClicks.length} positive={good * 100 / allClicks.length} valueQ={valueQ}/></tr>
+        <Button text="Submitting feedback" handleClick={submitFeedback} />
+      </table>
     </div>
   )
 }
