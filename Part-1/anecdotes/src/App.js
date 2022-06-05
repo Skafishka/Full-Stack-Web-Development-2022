@@ -13,11 +13,6 @@ const Text = (props) => {
 }
 
 const App = () => {
-  const nextAnecdote = () => {
-    setSelected(Math.floor(Math.random() * anecdotes.length))
-  }
-  const [selected, setSelected] = useState(0)
-
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software projects makes it later',
@@ -34,11 +29,31 @@ const App = () => {
     'Conceptual integrity is the most important consideration in system design.'
   ]
 
+  const [selected, setSelected] = useState(0)
+  const [value, setValue] = useState(0)
+  const [click, setClick] = useState(0)
+
+  const vote = () => {
+    setValue(value + 1)
+    setClick(click + 1)
+  }
+
+  const nextAnecdote = () => {
+    setSelected(Math.floor(Math.random() * anecdotes.length))
+  }
+
+  const points = Array.apply(null, {length: anecdotes.length}).map(function() {return 0;})
+  const copy = points
+  copy[selected] += click
+ 
+  
+  console.log(copy)
+   
   return (
     <>
       <Text anecdotes={anecdotes[selected]}/>
-      <Button text='Next anecdote' handleClick={nextAnecdote}/>
-     
+      <Button text='vote' handleClick={vote}/>
+      <Button text='Next anecdote' handleClick={nextAnecdote}/>  
     </>
   )
 }
