@@ -129,6 +129,7 @@ const App = () => {
       <Button text="Submitting feedback" handleClick={submitFeedback} />
     </div>  
   )
+  
 }
 
 export default App;
