@@ -5,12 +5,23 @@ const Button = (props) => (
 )
 
 const Text = (props) => {
-  return (
-    <>
-      <p>{props.anecdotes}</p>
-      <p>The anecdote has {props.value} votes</p>
+
+  if (props.value !== 0) {
+    return (
+      <>
+        <p>{props.anecdotes}</p>
+        <p> the anecdote has {props.value} votes</p>
+      </>
+    )
+  }
+  else if (props.value === 0 && props.q === 0) (
+      <>
+        <p>{props.anecdotes}</p>
+        <p> the anecdote has 0 votes</p>
     </>
-  )
+    )
+  
+
 }
 
 const Anecdotes = [
@@ -37,25 +48,25 @@ const App = () => {
   
   const [selected, setSelected] = useState(0)
   const [value, setValue] = useState(0)
+  const [q, setQ] = useState(0)
     
   const vote = () => {
-    copy[selected] += 1
-    setValue(copy[selected])
-    console.log(copy[selected])
     console.log(copy)
-    console.log("votes " + value)
+    copy[selected] += 1
+    console.log(copy[selected])
+    setValue(copy[selected])
+    
+    console.log("votes " + copy[selected])
   }
 
   const nextAnecdote = () => {
-    
-    setSelected(Math.floor(Math.random() * Anecdotes.length))   
-    
+    setSelected(Math.floor(Math.random() * Anecdotes.length)) 
+    setQ(q+1) 
   } 
   
   return (
     <>
-      <Text anecdotes={Anecdotes[selected]} value={value}/>
-      
+      <Text anecdotes={Anecdotes[selected]} value={value} q={q}/>
       <Button text='vote' handleClick={vote}/>
       <Button text='Next anecdote' handleClick={nextAnecdote}/>
       
