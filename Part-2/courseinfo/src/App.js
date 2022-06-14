@@ -17,14 +17,15 @@ const Content = (props) => {
     </>
   )
 }
-const intitialValue = 0
 
-const Total = props.parts.reduce((s, p) => {
+const Total = (props) => {
+  console.log(props.parts);
   return (
     <>
-      <b>Number of exercises is { s.parts.exercises + p.parts.exercises, intitialValue }</b>
+      <b>Number of exercises is {props.parts.reduce((s, p) => s + p.exercises, 0)} </b>
+      
     </>
-  ) })
+  ) }
 
 
 const Course = ({course}) => {
