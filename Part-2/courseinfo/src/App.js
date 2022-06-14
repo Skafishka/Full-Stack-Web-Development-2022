@@ -26,11 +26,14 @@ const Total = (props) => {
   )
 }
 
-const Course = ({ course }) => (
-  <div>
-    <Header course ={course} />
-  </div>
-)
+const Course = ({course}) => {
+  return (
+    <>
+     <Header course={course} />
+     <Content parts={course.parts} />
+    </>
+  )
+}
 
 const App = () => {
   const course = {
