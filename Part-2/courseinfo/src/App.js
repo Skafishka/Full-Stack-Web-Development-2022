@@ -1,43 +1,34 @@
 import React from "react"
 
-const Header = (props) => {
-  return (
-    <>
-      <h1>{props.courses.name}</h1>
-    </>
-  )
-}
-
 const Result = (props) => {
-  return props.courses.map(note => <div key={note.id}> <h1>{note.name}</h1> {console.log(note)} </div> ) 
-}
-
-const Content = (props) => {
   return (
-    <>
-      <p>{props.parts[0].name} {props.parts[0].exercises}</p>
-      <p>{props.parts[1].name} {props.parts[1].exercises}</p>
-      <p>{props.parts[2].name} {props.parts[2].exercises}</p>
-    </>
+    <div>
+      <ul>
+        <h1>Web development curriculum</h1>
+      </ul>
+      {props.courses.map(note => 
+        <ul key={note.id}>
+          <h2>{note.name}</h2>
+          <div>
+            {note.parts.map(notes =>
+              <p key={notes.id}>
+                {notes.name} {notes.exercises} 
+              </p>
+            )}
+            <b>Number of exercises is {note.parts.reduce((s, p) => s + p.exercises, 0)} </b>  
+          </div>
+        </ul>
+      )}
+    </div>
   )
 }
-
-const Total = (props) => {
-  return (
-    <>
-      <b>Number of exercises is {props.parts.reduce((s, p) => s + p.exercises, 0)} </b>
-    </>
-  ) 
-}
-
 
 const Course = ({courses}) => {
   return (
     <>
      <Result courses={courses} />
     </>
-  )
-  
+  )  
 }
 
 const App = () => {
