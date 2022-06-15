@@ -1,1 +1,1 @@
-work with lesson "courseinfo"
+work with lesson "courseinfo" on part 2
