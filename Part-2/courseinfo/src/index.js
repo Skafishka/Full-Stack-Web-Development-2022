@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import ReactDOM from 'react-dom/client'
+import App from './App'
 
-const courses = [
+const notes = [
     {
       id: 1,
       name: 'Half Stack application development',
@@ -47,5 +47,5 @@ const courses = [
 ]
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-<App courses={courses}/>
+<App notes={notes} />
 )
