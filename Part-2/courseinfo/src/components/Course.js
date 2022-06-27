@@ -1,7 +1,7 @@
 const Note = ({note}) => {
     return (
         <>
-            <h2>{note.content}</h2>
+            <p>{note.content} {note.important}</p>
         </>
     )
 }

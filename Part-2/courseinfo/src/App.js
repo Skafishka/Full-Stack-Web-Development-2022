@@ -4,7 +4,7 @@ import Note from './components/Course'
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes)
   const [newNote, setNewNote] = useState('')
-  const [showAll, setShowAll] = useState(true)
+  const [showAll, setShowAll] = useState(false)
 
   const addNote = (event) => {
     event.preventDefault()
@@ -24,15 +24,22 @@ const App = (props) => {
     setNewNote(event.target.value)
   }
 
+  const notesToShow = showAll 
+    ? notes 
+    : notes.filter(note => note.important === true)
+
   return (
     <>
       <ul>
         <h1>Web development curriculum</h1>
-        {notes.flatMap(note =>
-          <Note key={note.id} note={note}>
-          </Note>
+        <div>
+          <button onClick={() => setShowAll(!showAll)}>
+            show {showAll ? 'important' : 'all'}
+          </button>
+        </div>
+        {notesToShow.map(note =>
+          <Note key={note.id} note={note}/>
         )}
-   
       </ul>
       <form onSubmit={addNote}>
         <input 
