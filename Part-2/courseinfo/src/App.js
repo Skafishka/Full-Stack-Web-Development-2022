@@ -8,9 +8,8 @@ const App = (props) => {
 
   const addNote = (event) => {
     event.preventDefault()
-    console.log('button clicked', event.target)
     const noteObject = {
-      content: newNote,
+      name: newNote,
       date: new Date().toISOString(),
       important: Math.random() < 0.5,
       id: notes.length + 1,
@@ -29,9 +28,11 @@ const App = (props) => {
     <>
       <ul>
         <h1>Web development curriculum</h1>
-        {notes.map(note =>
-          <Note key={note.id} note={note}/>
+        {notes.flatMap(note =>
+          <Note key={note.id} note={note}>
+          </Note>
         )}
+   
       </ul>
       <form onSubmit={addNote}>
         <input 
