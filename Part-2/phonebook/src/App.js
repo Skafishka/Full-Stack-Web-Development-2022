@@ -25,22 +25,18 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addNote}>
-        <div>
           <input 
           value={newName}
           onChange={handleNoteChange}
           />
-          <button type="submit">add</button>
-        </div>
+          <button type="submit">add</button> 
       </form>
       <h2>Numbers</h2>
-      <div>
         {persons.map((name) => 
           <li key={name.toString()}>
             {name.name}
           </li>
         )}   
-      </div>
     </div>
   );
 }
