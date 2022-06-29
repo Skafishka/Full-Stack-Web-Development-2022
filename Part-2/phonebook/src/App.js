@@ -1,5 +1,53 @@
 import { useState } from 'react'
 
+const Personform = (props) => {
+  return (
+    <form onSubmit={props.addNote}>
+      <>
+        name: 
+        <input 
+          value={props.newName}
+          onChange={props.handleNoteChange}
+        />
+      </>
+      <>
+        number:
+        <input
+          value={props.newPhone}
+          onChange={props.handlePhoneChange}
+        />
+      </>
+      <>
+        <button type="submit">add</button>
+      </>
+    </form> 
+  )
+}
+
+const Filter = (props) => {
+  return (
+    <>
+      {props.persons.filter(person => person.name.toLowerCase().includes(props.showFiltered.toLowerCase())).map((filteredName, id) => (
+        <li key={id.toString()}>
+          {filteredName.name} {filteredName.number}
+        </li>
+      ))}
+    </>
+  )
+}
+
+const Persons = (props) => {
+  return (
+    <>
+      filter shown with:
+      <input
+      value={props.showFiltered}
+      onChange={props.handleFilterChange}
+      />
+    </>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '98-918-30', },
@@ -40,41 +88,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with:
-        <input
-        value={showFiltered}
-        onChange={handleFilterChange}
-        />
-      </div>
+      <Persons showFiltered={showFiltered} handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
-      <form onSubmit={addNote}>
-        <div>
-          name: 
-          <input 
-            value={newName}
-            onChange={handleNoteChange}
-          />
-        </div>
-        <div>
-          number:
-          <input
-            value={newPhone}
-            onChange={handlePhoneChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Personform addNote={addNote} newName={newName} handleNoteChange={handleNoteChange} newPhone={newPhone} handlePhoneChange={handlePhoneChange} />
       <h2>Numbers</h2>
-      <div>
-        {persons.filter(person => person.name.toLowerCase().includes(showFiltered.toLowerCase())).map((filteredName, id) => (
-          <li key={id.toString()}>
-            {filteredName.name} {filteredName.number}
-          </li>
-        ))}
-      </div>
+      <Filter persons={persons} showFiltered={showFiltered} />
     </div>
   );
 }
