@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import noteService from './services/dB'
 
 const Personform = (props) => {
   return (
@@ -25,18 +25,6 @@ const Personform = (props) => {
   )
 }
 
-const Filter = (props) => {
-  return (
-    <>
-      {props.persons.filter(person => person.name.toLowerCase().includes(props.showFiltered.toLowerCase())).map((filteredName, id) => (
-        <li key={id.toString()}>
-          {filteredName.name} {filteredName.number}
-        </li>
-      ))}
-    </>
-  )
-}
-
 const Persons = (props) => {
   return (
     <>
@@ -49,21 +37,31 @@ const Persons = (props) => {
   )
 }
 
+const Filter = (props) => {
+  return (
+    <>
+      {props.persons.filter(person => person.name.toLowerCase().includes(props.showFiltered.toLowerCase())).map((filteredName, id) => (
+        <li key={id.toString()}>
+          {filteredName.name} {filteredName.number}
+        </li>
+      ))}
+    </>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [showFiltered, setShowFiltered] = useState('')
 
-useEffect(() => {
-  console.log('effect')
-  axios
-    .get('http://localhost:3001/persons').then(response => {
-      console.log('promise fulfilled')
-      setPersons(response.data)
-    })
-}, [])
-console.log('render', persons.length, 'persons')
+  useEffect(() => {
+    noteService
+      .getAll()
+      .then(initialNotes => {
+        setPersons(initialNotes)
+      })
+  }, [])
 
   const addNote = (event) => {
     event.preventDefault()
@@ -71,25 +69,30 @@ console.log('render', persons.length, 'persons')
       name: newName,
       number: newPhone,
     }
-    persons.find(q => {return (JSON.stringify(q.name) === JSON.stringify(newName)) }) 
-      !== undefined 
-      ? window.alert(`${newName} is already added to phonebook`) 
-      : setPersons(persons.concat(noteObject))
-    setNewName('')
-    setNewPhone('')
+
+    noteService
+      .create(noteObject)
+      .then(returnedNote => {
+        persons.find(q => {return (JSON.stringify(q.name) === JSON.stringify(newName)) }) 
+        !== undefined 
+        ? window.alert(`${newName} is already added to phonebook`) 
+        : setPersons(persons.concat(returnedNote))
+        setNewName('')
+        setNewPhone('')
+      })
   }
-  
+ 
   const handleNoteChange = (event) => {
     setNewName(event.target.value)
   }
 
   const handlePhoneChange = (event) => {
     setNewPhone(event.target.value)
-  }
+  }  
 
   const handleFilterChange = (event) => {
     setShowFiltered(event.target.value);
-  }
+  }  
 
   return (
     <div>
@@ -100,7 +103,7 @@ console.log('render', persons.length, 'persons')
       <h2>Numbers</h2>
       <Filter persons={persons} showFiltered={showFiltered} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
