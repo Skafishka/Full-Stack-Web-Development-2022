@@ -1,38 +1,14 @@
 import { useState, useEffect } from 'react'
 import noteService from './services/dB'
-
-const Personform = (props) => {
-  return (
-    <form onSubmit={props.addNote}>
-      <>
-        name: 
-        <input 
-          value={props.newName}
-          onChange={props.handleNoteChange}
-        />
-      </>
-      <>
-        number:
-        <input
-          value={props.newPhone}
-          onChange={props.handlePhoneChange}
-        />
-      </>
-      <>
-        <button type="submit">add</button>        
-      </>
-    </form>
-  )
-}
+import Notification from './components/Notification'
+import Personform from './components/Personform'
 
 const Persons = (props) => {
   return (
     <>
-      filter shown with:
-      <input
+      filter shown with: <input
         value={props.showFiltered}
-        onChange={props.handleFilterChange}
-      />
+        onChange={props.handleFilterChange} />
     </>
   )
 }
@@ -54,8 +30,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [showFiltered, setShowFiltered] = useState('')
-  const [newID, setNewID] = useState('')
-
+  const [newMessage, setNewMessage] = useState(null)
+  
   useEffect(() => {
     noteService
       .getAll()
@@ -69,18 +45,24 @@ const App = () => {
     const noteObject = {
       name: newName,
       number: newPhone,
-      id: newID,
     }
-    noteService
-      .create(noteObject)
-      .then(returnedNote => {
-        persons.find(q => {return (JSON.stringify(q.name) === JSON.stringify(newName)) }) 
-        !== undefined 
-        ? window.alert(`${newName} is already added to phonebook`) 
-        : setPersons(persons.concat(returnedNote))
-        setNewName('')
-        setNewPhone('')
-      })
+    if (persons.find(q => {return (JSON.stringify(q.name) === JSON.stringify(newName)) })) {
+      window.alert(`${newName} is already added to phonebook`) 
+      setNewName('')
+      setNewPhone('')}
+    else { 
+      noteService
+        .create(noteObject)
+        .then(() => {
+          setPersons(persons.concat(noteObject))
+          setNewMessage(`${newName} was added`)
+          setTimeout(() => {
+            setNewMessage(null)
+          }, 2000)
+          setNewName('')
+          setNewPhone('')
+        })
+    }  
   }
  
   const deletePerson = (id, name) => {
@@ -110,6 +92,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Persons showFiltered={showFiltered} handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
+      <Notification message={newMessage} />
       <Personform addNote={addNote} newName={newName} handleNoteChange={handleNoteChange} newPhone={newPhone} handlePhoneChange={handlePhoneChange} />
       <h2>Numbers</h2>
       <Filter persons={persons} showFiltered={showFiltered} deletePerson={deletePerson} />      
