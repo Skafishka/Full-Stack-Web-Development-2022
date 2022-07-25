@@ -1,4 +1,3 @@
-const { request, response, application } = require('express')
 const express = require('express')
 const app = express()
 
@@ -45,17 +44,38 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+const generateId = () => {
+  const maxId = persons.length > 0
+    ? Math.max(...persons.map(n => n.id))
+    : 0
+  return maxId + Math.floor(Math.random() * 1000)
+}
+
 app.post('/api/persons', (request, response) => {
-  const person = request.body
-  console.log(person)
+  const body = request.body
+  
+  if (body.name === undefined || body.number === undefined || (body.id === generateId())) {
+    return response.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
+  const person = {
+    id: generateId(),
+    name: 'default',
+    number: 'default',
+  }
+
+  persons = persons.concat(person)
+
   response.json(person)
 })
 
 app.get('/info', (request, response) => {
   const maxId = persons.length > 0
-    ? Math.max(...persons.map(q => q.id))
+    ? persons.length
     : 0
-  response.send(`<h2>Phonebook has info for ${maxId} people<h2>`)
+  response.send(`<h2>Phonebook has info for ${maxId} people<h2> ${new Date()}`)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
