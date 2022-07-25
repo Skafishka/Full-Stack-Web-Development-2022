@@ -1,9 +1,10 @@
+const { request, response, application } = require('express')
 const express = require('express')
 const app = express()
 
-const http = require('http')
+app.use(express.json())
 
-let notes = [
+let persons = [
   { 
     "id": 1,
     "name": "Arto Hellas", 
@@ -30,8 +31,38 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
 })
 
-app.get('/api/notes', (request, response) => {
-  response.json(notes)
+app.get('/api/persons', (request, response) => {
+  response.json(persons)
+})
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const person = persons.find(person => person.id === id)
+  if (person) {
+    response.json(person)
+  } else {
+    response.status(404).end()
+  }
+})
+
+app.post('/api/persons', (request, response) => {
+  const person = request.body
+  console.log(person)
+  response.json(person)
+})
+
+app.get('/info', (request, response) => {
+  const maxId = persons.length > 0
+    ? Math.max(...persons.map(q => q.id))
+    : 0
+  response.send(`<h2>Phonebook has info for ${maxId} people<h2>`)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
