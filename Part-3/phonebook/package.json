@@ -1,32 +1,41 @@
 {
   "name": "phonebook",
   "version": "0.1.0",
-  "private": true,
+
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "event-source-polyfill": "^1.0.26",
     "express": "^4.18.1",
     "morgan": "^1.10.0",
+    "net": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "stream-http": "^3.2.0",
     "web-vitals": "^2.1.4"
   },
+  "resolve.fallback": { 
+    "http": {
+      "require.resolve": "stream-http"
+    }
+  },
   "scripts": {
-    "start": "node index.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "node ./src/index.js",
     "server": "json-server -p3001 --watch ds.json",
     "dev": "nodemon index.js"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "browser": {
+    "http": false,
+    "https": false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false,
+    "fs": false
   },
   "browserslist": {
     "production": [
@@ -46,14 +55,6 @@
   },
   "description": "work with the Phonebook lesson.",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Skafishka/Full-Stack-Web-Development-2022.git#main"
-  },
   "author": "\"Sergei Kolygin\"",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://github.com/Skafishka/Full-Stack-Web-Development-2022/issues"
-  },
-  "homepage": "https://github.com/Skafishka/Full-Stack-Web-Development-2022/tree/main#readme"
+  "license": "UNLICENSED"
 }
