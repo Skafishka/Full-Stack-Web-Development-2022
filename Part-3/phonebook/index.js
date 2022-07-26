@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
@@ -25,6 +26,8 @@ let persons = [
     "number": "39-23-6423122"
   }
 ]
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 app.get('/', (request, response) => {
   response.send('<h1>Hello World</h1>')
@@ -75,7 +78,8 @@ app.get('/info', (request, response) => {
   const maxId = persons.length > 0
     ? persons.length
     : 0
-  response.send(`<h2>Phonebook has info for ${maxId} people<h2> ${new Date()}`)
+  response.send(`<h2>Phonebook has info for ${maxId} people<h2>
+  <h3>${new Date()}</h3>`)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
