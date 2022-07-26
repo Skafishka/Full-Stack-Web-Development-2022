@@ -25,7 +25,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "server": "json-server -p3001 --watch ds.json",
-    "dev": "nodemon index.js"
+    "dev": "nodemon ./src/index.js"
   },
   "browser": {
     "http": false,
