@@ -1,52 +1,14 @@
 {
-  "name": "phonebook",
+  "name": "phonebook-backend",
   "version": "0.1.0",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.27.2",
-    "cors": "^2.8.5",
-    "event-source-polyfill": "^1.0.26",
     "express": "^4.18.1",
-    "morgan": "^1.10.0",
-    "net": "^1.0.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "stream-http": "^3.2.0",
-    "web-vitals": "^2.1.4"
-  },
-  "resolve.fallback": { 
-    "http": {
-      "require.resolve": "stream-http"
-    }
+    "morgan": "^1.10.0"
   },
   "scripts": {
     "start": "node ./src/index.js",
     "server": "json-server -p3001 --watch ds.json",
     "dev": "nodemon ./src/index.js"
-  },
-  "browser": {
-    "http": false,
-    "https": false,
-    "net": false,
-    "path": false,
-    "stream": false,
-    "tls": false,
-    "fs": false
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "json-server": "^0.17.0",
