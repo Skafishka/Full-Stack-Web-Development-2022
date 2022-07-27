@@ -2,4 +2,4 @@
 
 > Work with the Phonebook lesson. 
 
-3.10 phonebook backend step10 [Deploy on Heroku](https://phonebookherokuapp.herokuapp.com/api/persons).
+3.10 phonebook backend step10 [Deploy on Heroku](https://phonebookherokuapp.herokuapp.com/api/persons)
