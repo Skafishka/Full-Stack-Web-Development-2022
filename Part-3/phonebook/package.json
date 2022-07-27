@@ -17,5 +17,8 @@
   "description": "work with the Phonebook lesson.",
   "main": "index.js",
   "author": "\"Sergei Kolygin\"",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "resolutions": {
+    "mini-css-extract-plugin": "2.4.5"
+  }
 }
