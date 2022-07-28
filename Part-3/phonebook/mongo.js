@@ -12,43 +12,33 @@ const number = process.argv[4]
 const url = `mongodb+srv://fullstack:${password}@cluster0.wdy2gzo.mongodb.net/personsApp?retryWrites=true&w=majority`
 
 const personSchema = new mongoose.Schema({
-  id: Number,
-  name: String,
-  number: String,
+    id: Number,
+    name: String,
+    number: String,
 })
 
 const Person = mongoose.model('Person', personSchema)
 
 mongoose
-  .connect(url)
-  .then((result) => {
-    console.log('connected')
-
+.connect(url)
+.then((result) => {
+    console.log(`${name} with following number ${number} added to phonebook!`)
+    console.log("phonebook:")
+    
     const person = new Person({
-      id: 1,
-      name: name,
-      number: number
+        id: 1,
+        name: name,
+        number: number
     })
-    console.log(`added ${name} number ${number} to phonebook!`)
-    return person.save()
-    mongoose.connection.close()
-  })
-
-mongoose
-    .connect(url)  
-    .then(
-        Person.find({})   
-        .then(result => {
-            result.forEach(person => {console.log(person)
-        })
+    
+    person.save().then(result => {
+        console.log(result.name, result.number);
         mongoose.connection.close()
     })
-  )
-  .catch((err) => console.log(err))
+})
 
-
-    
-
-  
-
-  
+Person.find({}).then(result => {
+    result.forEach(person => {
+        console.log(person.name, person.number);
+    })
+})  
