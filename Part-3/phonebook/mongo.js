@@ -41,4 +41,4 @@ Person.find({}).then(result => {
     result.forEach(person => {
         console.log(person.name, person.number);
     })
-})  
+})
