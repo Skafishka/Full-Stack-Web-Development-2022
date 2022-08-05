@@ -1,48 +1,12 @@
 const express = require('express')
-const morgan = require('morgan')
 const app = express()
-const mongoose = require ('mongoose')
-
-const password = 'FBIHxBYdqnBTGoBD'
-
-const url = `mongodb+srv://fullstack:${password}@cluster0.wdy2gzo.mongodb.net/personsApp?retryWrites=true&w=majority`
-
-mongoose.connect(url)
-
-const personSchema = new mongoose.Schema({
-  id: Number,
-  name: String,
-  number: String,
-})
-
-const Person = mongoose.model('Person', personSchema)
+const morgan = require('morgan')
+require('dotenv').config()
+const Person = require('.models/person')
 
 app.use(express.json())
 
 app.use(express.static('build'))
-
-let persons = [
-  { 
-    "id": 1,
-    "name": "Arto Hellas", 
-    "number": "040-123456"
-  },
-  { 
-    "id": 2,
-    "name": "Ada Lovelace", 
-    "number": "39-44-5323523"
-  },
-  { 
-    "id": 3,
-    "name": "Dan Abramov", 
-    "number": "12-43-234345"
-  },
-  { 
-    "id": 4,
-    "name": "Mary Poppendieck", 
-    "number": "39-23-6423122"
-  }
-]
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
@@ -52,64 +16,50 @@ app.get('/api/persons', (request, response) => {
   })
 })
 
-personSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.id
-    delete returnedObject.__v
-  }
-})
-
 app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const person = persons.find(person => person.id === id)
-  if (person) {
+  Person.findById(request.params.id).then(person => {
     response.json(person)
-  } else {
-    response.status(404).end()
-  }
+  })
 })
 
+app.get('/q', (req, res) => {
+  Person.find({}).sort( {id : -1} ).then(q => {res.json(q)})
+})
+
+/* deprecated
 const generateId = () => {
-  const maxId = persons.length > 0
-    ? Math.max(...persons.map(n => n.id))
-    : 0
-  return maxId + Math.floor(Math.random() * 1000)
+  const maxId = Person.estimatedDocumentCount() > 0
+  ? Person.estimatedDocumentCount() + 1
+  : 1
+  return maxId
 }
+*/
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
   
-  if (body.name === undefined || body.number === undefined || (body.id === generateId())) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
-  }
+  const person = new Person({
+    id: body.id,
+    name: body.name,
+    number: body.number,
+  })
 
-  const person = {
-    id: generateId(),
-    name: 'default',
-    number: 'default',
-  }
-
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 app.get('/info', (request, response) => {
-  const maxId = persons.length > 0
-    ? persons.length
-    : 0
-  response.send(`<h2>Phonebook has info for ${maxId} people<h2>
-  <h3>${new Date()}</h3>`)
+  Person.find().estimatedDocumentCount(function(result) {
+    response.send(result)
+  })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-  response.status(204).end()
+  Person.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end
+    })
 })
 
 const PORT = process.env.PORT || 3001
