@@ -20,15 +20,12 @@ app.use(requestLogger)
 
 app.use(cors())
 
-app.use(express.static('build'))
+/*app.use(express.static('build'))*/
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
-  if (body.name === '') {
-    return response.status(400).json({ error: 'name missing' })
-  }
 
   const person = new Person({
     name: body.name,
@@ -36,9 +33,11 @@ app.post('/api/persons', (request, response) => {
     id: body.id,
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  person.save({ new: true })
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
 
 app.get('/api/persons', (request, response) => {
@@ -85,6 +84,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)
