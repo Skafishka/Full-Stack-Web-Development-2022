@@ -11,9 +11,11 @@
   "scripts": {
     "start": "node ./src/index.js",
     "server": "json-server -p3001 --watch ds.json",
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./src/index.js",
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "eslint": "^8.22.0",
     "json-server": "^0.17.0",
     "nodemon": "^2.0.19"
   },

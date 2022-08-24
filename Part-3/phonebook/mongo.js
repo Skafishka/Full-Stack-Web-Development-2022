@@ -12,33 +12,33 @@ const number = process.argv[4]
 const url = `mongodb+srv://fullstack:${password}@cluster0.wdy2gzo.mongodb.net/personsApp?retryWrites=true&w=majority`
 
 const personSchema = new mongoose.Schema({
-    id: Number,
-    name: String,
-    number: String,
+  id: Number,
+  name: String,
+  number: String,
 })
 
 const Person = mongoose.model('Person', personSchema)
 
 mongoose
-.connect(url)
-.then((result) => {
+  .connect(url)
+  .then(() => {
     console.log(`${name} with following number ${number} added to phonebook!`)
-    console.log("phonebook:")
-    
+    console.log('phonebook:')
+
     const person = new Person({
-        id: 1,
-        name: name,
-        number: number
+      id: 1,
+      name: name,
+      number: number
     })
-    
+
     person.save().then(result => {
-        console.log(result.name, result.number);
-        mongoose.connection.close()
+      console.log(result.name, result.number)
+      mongoose.connection.close()
     })
-})
+  })
 
 Person.find({}).then(result => {
-    result.forEach(person => {
-        console.log(person.name, person.number);
-    })
+  result.forEach(person => {
+    console.log(person.name, person.number)
+  })
 })
