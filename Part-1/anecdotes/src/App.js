@@ -65,7 +65,7 @@ const App = () => {
   
   return (
     <>
-      <Header header={firstHeader} secondHeader={secondHeader} />
+      <Header header={firstHeader} />
       <Text anecdotes={Anecdotes[selected]} value={copy[selected]} />
       <Button text='Vote' handleClick={vote} />
       <Button text='Next anecdote' handleClick={nextAnecdote} />
