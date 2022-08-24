@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-require('dotenv').config()
 const morgan = require('morgan')
+require('dotenv').config()
 const Person = require('./models/person')
 const { request, response } = require('express')
 
@@ -20,9 +20,15 @@ app.use(requestLogger)
 
 app.use(cors())
 
-/* app.use(express.static('build')) */
+app.use(express.static('build'))
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+
+app.get('/api/persons', (request, response) => {
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
+})
 
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
@@ -40,18 +46,11 @@ app.post('/api/persons', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get('/api/persons', (request, response) => {
-  Person.find({}).then(persons => {
-    response.json(persons)
-  })
-})
-
 app.get('/info', (request, response) => {
   Person.find({}).then(rsl => {
     response.json(`Base contains: ${rsl.length} contacts`)
   })
 })
-
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
