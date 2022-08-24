@@ -47,7 +47,7 @@ app.post('/api/persons', (request, response, next) => {
 
 app.get('/info', (request, response) => {
   Person.find({}).then(rsl => {
-    response.json(`Base contains: ${rsl.length} contacts`)
+    response.json(`Base contains: ${rsl.length} contacts on current date ${new Date().toLocaleString()}`)
   })
 })
 
