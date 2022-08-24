@@ -1,8 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
 const morgan = require('morgan')
-require('dotenv').config()
 const Person = require('./models/person')
 const { request, response } = require('express')
 
@@ -16,9 +16,9 @@ const requestLogger = (request, response, next) => {
 
 app.use(express.json())
 
-app.use(requestLogger)
-
 app.use(cors())
+
+app.use(requestLogger)
 
 app.use(express.static('build'))
 
