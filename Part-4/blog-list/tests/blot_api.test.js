@@ -52,6 +52,12 @@ test('creating a new post', async () => {
   expect(title).toContain('How to add a new Note')
 })
 
+test('verifies that the unique identifier property posts is id', async () => {
+  const response = await api.get('/api/blogs')
+
+  expect(response.body[0].id).toBeDefined()
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
