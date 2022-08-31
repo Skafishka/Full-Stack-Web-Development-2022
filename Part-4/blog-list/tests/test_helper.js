@@ -1,6 +1,6 @@
 const Blog = require('../models/blog')
 
-const initialNotes = [
+const initialBlogs = [
   {
     title: 'Arthur',
     author: 'Konan',
@@ -27,5 +27,5 @@ const blogsInDb = async () => {
 }
 
 module.exports = {
-  initialNotes, blogsInDb
+  initialBlogs, blogsInDb
 }
