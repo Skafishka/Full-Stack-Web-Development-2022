@@ -64,7 +64,7 @@ describe('4.9*: Blog list tests, step2', () => {
   })
 })
 
-describe('deletion of a note', () => {
+describe('deletion of a blog', () => {
   test('succeeds with status code 204', async () => {
     const blogsAtStart = await helper.blogsInDb()
     const blogToDelete = blogsAtStart[0]
@@ -82,6 +82,22 @@ describe('deletion of a note', () => {
     const titles = blogsAtEnd.map(q => q.content)
 
     expect(titles).not.toContain(blogToDelete.title)
+  })
+})
+
+describe('update a likes amoount', () => {
+  test('put succeeds', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[1]
+    const updateLikes = { likes: 56 }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(updateLikes)
+      .expect(200)
+
+    const likesNumber = blogsAtStart.map(q => q.likes)
+    expect(likesNumber).toContain(56)
   })
 })
 

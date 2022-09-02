@@ -10,3 +10,15 @@ content-type: application/json
     "url": "sample",
     "likes": 5
 }
+
+###
+PUT http://localhost:3003/api/blogs/630f3f96812de15d401202bf
+content-type: application/json
+
+{
+  "title": "How to live",
+  "author": "Andrew",
+  "url": "qwqw.aase.er",
+  "likes": 10,
+  "id": "630f3f96812de15d401202bf"
+}
