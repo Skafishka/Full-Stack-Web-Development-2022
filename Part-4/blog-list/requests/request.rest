@@ -5,10 +5,10 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "Create a blog with userId",
-    "author": "Sergei Kolygin",
-    "url": "salainen",
-    "likes": "456",
+    "title": "Continue of education",
+    "author": "Richard Gibson",
+    "url": "www.get.com",
+    "likes": "4753",
     "userId": "6313464143df4a0893339e35"
 }
 
