@@ -5,10 +5,11 @@ POST http://localhost:3003/api/blogs
 content-type: application/json
 
 {
-    "title": "sample",
-    "author": "sample",
-    "url": "sample",
-    "likes": 5
+    "title": "Create a blog with userId",
+    "author": "Sergei Kolygin",
+    "url": "salainen",
+    "likes": "456",
+    "userId": "6313464143df4a0893339e35"
 }
 
 ###
