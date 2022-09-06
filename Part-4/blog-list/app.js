@@ -25,7 +25,6 @@ app.use(express.json())
 app.use(express.static('build'))
 app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
-app.use(middleware.requestLogger)
 
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogesRouter)
@@ -33,5 +32,6 @@ app.use('/api/users', usersRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.requestLogger)
+app.use(middleware.errorHandler)
 
 module.exports = app

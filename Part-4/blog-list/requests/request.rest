@@ -32,3 +32,16 @@ Content-type: application/json
   "username": "Garry",
   "password": "qwerty"
 }
+
+###
+POST http://localhost:3003/api/blogs
+Content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkdhcnJ5IiwiaWQiOiI2MzE3OWRlMmQyMDQwYmNiNDQxMTk0NzciLCJpYXQiOjE2NjI0OTQ4ODd9.-9E5dE7Z66wMEZzctvPFfo3yddb19ZddIyHsp6lH4Hc
+
+{
+  "title": "Part 2",
+  "author": "Gerbert",
+  "url": "www.ahead.es",
+  "likes": 929,
+  "id": "63179de2d2040bcb44119477"
+}
