@@ -7,7 +7,7 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
 describe('checking the initial condition of blogs', () => {
@@ -34,29 +34,28 @@ describe('checking the initial condition of blogs', () => {
 
     expect(response.body[0].title).toBe('Arthur')
   })
+})
 
+describe('adding blogs', () => {
+  test('creating a new blog', async () => {
+    const newBlog = {
+      title: 'How to add a new Blog',
+      author: 'Wheil Conrad',
+      url: 'www.qwerty.com',
+      likes: 55
+    }
 
-  describe('adding blogs', () => {
-    test('creating a new blog', async () => {
-      const newBlog = {
-        title: 'How to add a new Blog',
-        author: 'Wheil Conrad',
-        url: 'www.qwerty.com',
-        likes: 55
-      }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
 
-      await api
-        .post('/api/blogs')
-        .send(newBlog)
-        .expect(201)
-        .expect('Content-Type', /application\/json/)
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
-      const blogsAtEnd = await helper.blogsInDb()
-      expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
-
-      const title = blogsAtEnd.map(q => q.title)
-      expect(title).toContain('How to add a new Blog')
-    })
+    const title = blogsAtEnd.map(q => q.title)
+    expect(title).toContain('How to add a new Blog')
   })
 
   describe('4.9*: Blog list tests, step2', () => {
@@ -112,23 +111,18 @@ describe('when there is initially one user in db', () => {
 
     const passwordHash = await bcrypt.hash('sekret', 10)
     const user = new User({ username: 'root', passwordHash })
-    const user2 = new User({
-      username: 'George',
-      name: 'Dvorkovich',
-      password: 'Genrich'
-    })
 
     await user.save()
-    await user2.save()
+
   })
 
   test('creation succeeds with a fresh username', async () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
-      username: 'Skafishka',
-      name: 'Sergei Kolygin',
-      password: 'salainen',
+      username: 'Garry',
+      name: 'Garry Richardson',
+      password: 'qwerty'
     }
 
     await api

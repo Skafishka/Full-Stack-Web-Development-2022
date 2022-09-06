@@ -4,16 +4,15 @@ const User = require('../models/user')
 
 blogesRouter.get('/', async (request, response) => {
   const blogs = await Blog
-    .find({}).populate('user', { username: 1, name: 1 })
-  if (blogs) {
-    response.json(blogs)
-  } else {
-    response.status(404).end()
-  }
+    .find({})
+    .populate('user', { username: 1, name: 1 })
+
+  response.json(blogs)
 })
 
 blogesRouter.get('/:id', async (request, response) => {
   const blog = await Blog.findById(request.params.id)
+
   if (blog) {
     response.json(blog)
   } else {
@@ -28,7 +27,6 @@ blogesRouter.delete('/:id', async (request, response) => {
 
 blogesRouter.post('/', async (request, response) => {
   const body = request.body
-
   const user = await User.findById(body.userId)
 
   const blog = new Blog({
