@@ -19,7 +19,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs)
     )  
   }, [])
 
@@ -47,7 +47,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 2000)
@@ -61,30 +61,6 @@ const App = () => {
     } catch (exception) {
       setErrorMessage('Log-out is impossible')
     }
-  }
-
-  const loginForm = () => {
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
   }
 
   const createBlog = (event) => {
@@ -126,30 +102,10 @@ const App = () => {
     setUrls(event.target.value)
   }
 
-
-
-  const blogForm = () => (
-    <form onSubmit={createBlog}>
-      <>
-        title: <input
-          value={newTitle}
-          onChange={handleTitleChange}
-        />
-        author: <input
-          value={newAuthor}
-          onChange={handleAuthorChange}
-        />
-        url: <input
-          value={newUrl}
-          onChange={handleUrlChange}
-        />
-        </> <button type="submit">save</button>
-        </form>
-  )
-  
   if (user === null) {
     return (
       <div>
+        <h2>log in to application</h2>
         <Notification message={errorMessage} />
         <form onSubmit={handleLogin}>
           <div>
@@ -175,24 +131,21 @@ const App = () => {
       </div>
     )
   }
-    
+
   return (
     <div>
       <h2>User</h2>
-      
       <form onSubmit={handleLogOut}>
         {user.name} logged-in <button type='submit'>logout</button>
       </form>
       <Notification message={newMessage} />
-      <h2>create new</h2>
-      {blogForm()}
+
+      <h2>Create new</h2>
+      <BlogForm addBlog={createBlog} newTitle={newTitle} handleTitleChange={handleTitleChange}
+        newAuthor={newAuthor} handleAuthorChange={handleAuthorChange} newUrl={newUrl} handleUrlChange={handleUrlChange}/>
+
       <h2>Blogs</h2>
-      {blogs.map(blog =>
-        <Blog 
-          key={blog.id} 
-          blog={blog} 
-        />
-      )}
+      <Blog blogs={blogs}/>
     </div>
   )
 }
