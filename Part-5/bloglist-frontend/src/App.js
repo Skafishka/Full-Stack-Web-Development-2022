@@ -5,6 +5,8 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -20,7 +22,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -105,29 +107,14 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <h2>log in to application</h2>
         <Notification message={errorMessage} />
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
       </div>
     )
   }
@@ -141,9 +128,19 @@ const App = () => {
       <Notification message={newMessage} />
 
       <h2>Create new</h2>
-      <BlogForm addBlog={createBlog} newTitle={newTitle} handleTitleChange={handleTitleChange}
-        newAuthor={newAuthor} handleAuthorChange={handleAuthorChange} newUrl={newUrl} handleUrlChange={handleUrlChange}/>
-
+      <div>
+        <Togglable buttonLabel="new blog">
+          <BlogForm 
+            onSubmit={createBlog} 
+            newTitle={newTitle} 
+            handleTitleChange={handleTitleChange}
+            newAuthor={newAuthor} 
+            handleAuthorChange={handleAuthorChange} 
+            newUrl={newUrl} 
+            handleUrlChange={handleUrlChange}
+          />
+        </Togglable>
+      </div>
       <h2>Blogs</h2>
       <Blog blogs={blogs}/>
     </div>
