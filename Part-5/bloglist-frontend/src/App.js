@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
@@ -128,7 +127,6 @@ const App = () => {
       <Notification message={newMessage} />
 
       <h2>Create new</h2>
-      <div>
         <Togglable buttonLabel="new blog">
           <BlogForm 
             onSubmit={createBlog} 
@@ -140,9 +138,9 @@ const App = () => {
             handleUrlChange={handleUrlChange}
           />
         </Togglable>
-      </div>
+     
       <h2>Blogs</h2>
-      <Blog blogs={blogs}/>
+      <Blog blogs={blogs} user={user.name}/>
     </div>
   )
 }
