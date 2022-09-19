@@ -39,16 +39,15 @@ const Blog = ({
             put new likes amount: <input value={updatedLikes} onChange={handleUpdatedLikesChange}/>
           </>
         </form>
-        {blogs.map((blog, id) => (
+        {blogs.sort((a, b) => a.likes - b.likes).map((blog, id) => (
           <li key={id.toString()} style={blogStyle}>
             <b>{blog.title}</b> by {blog.author} 
-            <ul>link: {blog.url}</ul>
-            <ul>likes: {blog.likes}
-
-              <button onClick={() => updateBlog(blog.id)}>update likes</button>
-            </ul>
-            <ul>user: {user} </ul>
-            <button onClick={toggleVisibility}>hide</button>
+              <ul>link: {blog.url}</ul>
+              <ul>likes: {blog.likes}
+                <button onClick={() => updateBlog(blog.id)}>update likes</button>
+              </ul>
+              <ul>user: {user} </ul>
+              <button onClick={toggleVisibility}>hide</button>
           </li>
         ))}
       </div>
