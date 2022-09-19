@@ -17,6 +17,7 @@ const App = () => {
   const [newUrl, setUrls] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
+  const [updatedLikes, setUpdatedLikes] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -91,6 +92,19 @@ const App = () => {
       })
   }
 
+  const updateBlog = (id) => {
+    
+    const blog = blogs.find(q => q.id === id)
+    const changedBlog = { ...blog, likes: updatedLikes }
+
+    blogService
+      .update(id, changedBlog)
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+        setUpdatedLikes('')
+      })
+  }
+
   const handleTitleChange = (event) => {
     setTitles(event.target.value)
   }
@@ -101,6 +115,10 @@ const App = () => {
 
   const handleUrlChange = (event) => {
     setUrls(event.target.value)
+  }
+
+  const handleUpdatedLikesChange = (event) => {
+    setUpdatedLikes(event.target.value)
   }
 
   if (user === null) {
@@ -140,7 +158,13 @@ const App = () => {
         </Togglable>
      
       <h2>Blogs</h2>
-      <Blog blogs={blogs} user={user.name}/>
+      <Blog 
+        blogs={blogs} 
+        user={user.name} 
+        updateBlog={updateBlog}
+        updatedLikes={updatedLikes}
+        handleUpdatedLikesChange={handleUpdatedLikesChange}
+      />
     </div>
   )
 }

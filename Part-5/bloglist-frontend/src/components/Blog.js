@@ -1,6 +1,12 @@
 import { useState } from "react"
 
-const Blog = ({blogs, user}) => {
+const Blog = ({
+  blogs, 
+  user, 
+  updateBlog,
+  updatedLikes,
+  handleUpdatedLikesChange
+}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -28,11 +34,19 @@ const Blog = ({blogs, user}) => {
         ))}
       </div>
       <div style={showWhenVisible}>
+        <form onSubmit={updateBlog}>
+          <>
+            put new likes amount: <input value={updatedLikes} onChange={handleUpdatedLikesChange}/>
+          </>
+        </form>
         {blogs.map((blog, id) => (
           <li key={id.toString()} style={blogStyle}>
             <b>{blog.title}</b> by {blog.author} 
             <ul>link: {blog.url}</ul>
-            <ul>likes: {blog.likes} <button>likes</button></ul>
+            <ul>likes: {blog.likes}
+
+              <button onClick={() => updateBlog(blog.id)}>update likes</button>
+            </ul>
             <ul>user: {user} </ul>
             <button onClick={toggleVisibility}>hide</button>
           </li>
