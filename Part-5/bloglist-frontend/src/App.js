@@ -156,22 +156,22 @@ const App = () => {
       <Notification message={newMessage} />
 
       <h2>Create new</h2>
-        <Togglable buttonLabel="new blog">
-          <BlogForm 
-            onSubmit={createBlog} 
-            newTitle={newTitle} 
-            handleTitleChange={handleTitleChange}
-            newAuthor={newAuthor} 
-            handleAuthorChange={handleAuthorChange} 
-            newUrl={newUrl} 
-            handleUrlChange={handleUrlChange}
-          />
-        </Togglable>
-     
+      <Togglable buttonLabel="new blog">
+        <BlogForm
+          onSubmit={createBlog}
+          newTitle={newTitle}
+          handleTitleChange={handleTitleChange}
+          newAuthor={newAuthor}
+          handleAuthorChange={handleAuthorChange}
+          newUrl={newUrl}
+          handleUrlChange={handleUrlChange}
+        />
+      </Togglable>
+
       <h2>Blogs</h2>
-      <Blog 
-        blogs={blogs} 
-        user={user.name} 
+      <Blog
+        blogs={blogs}
+        user={user.name}
         updateBlog={updateBlog}
         updatedLikes={updatedLikes}
         handleUpdatedLikesChange={handleUpdatedLikesChange}

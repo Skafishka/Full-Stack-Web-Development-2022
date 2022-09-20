@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({
-  blogs, 
-  user, 
+  blogs,
+  user,
   updateBlog,
   updatedLikes,
   handleUpdatedLikesChange,
@@ -51,7 +51,7 @@ const Blog = ({
               <ul>link: {blog.url}</ul>
               <ul>likes: {blog.likes} <button onClick={() => updateBlog(blog.id)}>update likes</button></ul>
               <ul>user: {user} </ul>
-              <button onClick={() => deleteBlog(blog.id)}>remove</button> 
+              <button onClick={() => deleteBlog(blog.id)}>remove</button>
             </li>
           ))
         }
