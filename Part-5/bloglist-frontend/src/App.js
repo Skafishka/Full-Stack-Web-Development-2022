@@ -93,7 +93,6 @@ const App = () => {
   }
 
   const updateBlog = (id) => {
-    
     const blog = blogs.find(q => q.id === id)
     const changedBlog = { ...blog, likes: updatedLikes }
 
@@ -103,6 +102,18 @@ const App = () => {
         setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
         setUpdatedLikes('')
       })
+  }
+
+  const deleteBlog = (id) => {
+    const blog = blogs.find(q => q.id === id)
+
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      blogService
+        .removeblog(id)
+        .then(() => {
+          setBlogs(blogs.filter(q => q.id !== id))
+        })
+    }
   }
 
   const handleTitleChange = (event) => {
@@ -164,6 +175,7 @@ const App = () => {
         updateBlog={updateBlog}
         updatedLikes={updatedLikes}
         handleUpdatedLikesChange={handleUpdatedLikesChange}
+        deleteBlog={deleteBlog}
       />
     </div>
   )
