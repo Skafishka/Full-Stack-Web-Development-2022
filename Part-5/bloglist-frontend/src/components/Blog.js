@@ -27,11 +27,11 @@ const Blog = ({
 
   return (
     <div>
-      <div style={hideWhenVisible}>
+      <div style={hideWhenVisible} >
         {blogs
           .sort((a, b) => a.likes - b.likes)
           .map((blog, id) => (
-            <li key={id.toString()}>
+            <li key={id.toString()} className='blog'>
               <b>{blog.title}</b> by {blog.author} <button onClick={toggleVisibility}>view</button>
             </li>
           ))
@@ -46,7 +46,7 @@ const Blog = ({
         {blogs
           .sort((a, b) => a.likes - b.likes)
           .map((blog, id) => (
-            <li key={id.toString()} style={blogStyle}>
+            <li key={id.toString()} style={blogStyle} >
               <b>{blog.title}</b> by {blog.author} <button onClick={toggleVisibility}>hide blog</button>
               <ul>link: {blog.url}</ul>
               <ul>likes: {blog.likes} <button onClick={() => updateBlog(blog.id)}>update likes</button></ul>
