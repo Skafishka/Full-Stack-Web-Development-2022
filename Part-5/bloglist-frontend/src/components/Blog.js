@@ -48,7 +48,7 @@ const Blog = ({
           .map((blog, id) => (
             <li key={id.toString()} style={blogStyle} >
               <b>{blog.title}</b> by {blog.author} <button onClick={toggleVisibility}>hide blog</button>
-              <ul >link: {blog.url}</ul>
+              <ul>link: {blog.url}</ul>
               <ul>likes: {blog.likes} <button onClick={() => updateBlog(blog.id)}>update likes</button></ul>
               <ul>user: {user} </ul>
               <button onClick={() => deleteBlog(blog.id)}>remove</button>

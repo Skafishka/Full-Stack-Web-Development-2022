@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-test('renders content', () => {
+test('5.13: Blog list tests, step1: renders content', () => {
   const blog = [
     {
       title: '111',
@@ -23,33 +23,28 @@ test('renders content', () => {
 
   expect(element).toBeDefined()
 })
-/*
-test('clicking the View button shows the blogs url and number of likes', async () => {
+
+test('5.15: Blog list tests, step3: clicking the Likes button twice calls event handler twice', async () => {
   const blog = [
     {
       title: '111',
       author: 'Genrich',
       likes: 56,
       url: 'www.genrich.net'
-    },
-    {
-      title: 'again',
-      author: 'Jakob',
-      likes: 89,
-      url: 'www.jakob.net'
     }
   ]
 
   const mockHandler = jest.fn()
 
   render(
-    <Blog blogs={blog} toggleVisibility={mockHandler} />
+    <Blog blogs={blog} updateBlog={mockHandler} />
   )
 
   const user = userEvent.setup()
-  const button = screen.getAllByText('www.jakob.net')
-  screen.debug(button)
+  const button = screen.getByText('update likes')
+
+  await user.click(button)
   await user.click(button)
 
   expect(mockHandler.mock.calls).toHaveLength(2)
-})*/
+})

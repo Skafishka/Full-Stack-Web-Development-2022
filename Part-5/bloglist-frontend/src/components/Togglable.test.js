@@ -21,7 +21,7 @@ describe('<Togglable />', () => {
     await screen.findAllByText('togglable content')
   })
 
-  test('at start the children are not displayed', () => {
+  test('5.14: Blog list tests, step2: at start the children are not displayed', () => {
     const div = container.querySelector('.togglableContent')
     expect(div).toHaveStyle('display: none')
   })
@@ -33,5 +33,7 @@ describe('<Togglable />', () => {
     const div = container.querySelector('.togglableContent')
     expect(div).not.toHaveStyle('display: ')
   })
+
+
 
 })
