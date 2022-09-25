@@ -31,7 +31,7 @@ describe('<Togglable />', () => {
     userEvent.click(button)
 
     const div = container.querySelector('.togglableContent')
-    expect(div).not.toHaveStyle('display: none')
+    expect(div).not.toHaveStyle('display: ')
   })
 
 })
