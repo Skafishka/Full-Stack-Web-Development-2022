@@ -1,29 +1,59 @@
+import { useState } from 'react'
+
 const BlogForm = ({
-  onSubmit,
-  newTitle,
-  handleTitleChange,
-  newAuthor,
-  handleAuthorChange,
-  newUrl,
-  handleUrlChange
+  createBlog
 }) => {
+  const [newTitle, setTitles] = useState('')
+  const [newAuthor, setAuthors] = useState('')
+  const [newUrl, setUrls] = useState('')
+
+  const handleTitleChange = (event) => {
+    setTitles(event.target.value)
+  }
+
+  const handleAuthorChange = (event) => {
+    setAuthors(event.target.value)
+  }
+
+  const handleUrlChange = (event) => {
+    setUrls(event.target.value)
+  }
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    createBlog({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    })
+    setTitles('')
+    setAuthors('')
+    setUrls('')
+  }
+
   return (
-    <form onSubmit={onSubmit}>
-      <>
+    <div>
+      <form onSubmit={addBlog}>
+        <>
                 title: <input
-          value={newTitle}
-          onChange={handleTitleChange}
-        />
+            value={newTitle}
+            onChange={handleTitleChange}
+            placeholder='write-content-here'
+
+          />
                 author: <input
-          value={newAuthor}
-          onChange={handleAuthorChange}
-        />
+            value={newAuthor}
+            onChange={handleAuthorChange}
+            placeholder='write-content-here'
+          />
                 url: <input
-          value={newUrl}
-          onChange={handleUrlChange}
-        />
-      </> <button type="submit">save</button>
-    </form>
+            value={newUrl}
+            onChange={handleUrlChange}
+            placeholder='write-content-here'
+          />
+        </> <button type="submit">save</button>
+      </form>
+    </div>
   )
 }
 

@@ -12,11 +12,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newTitle, setTitles] = useState('')
-  const [newAuthor, setAuthors] = useState('')
-  const [newUrl, setUrls] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   const [updatedLikes, setUpdatedLikes] = useState('')
 
   useEffect(() => {
@@ -65,24 +62,15 @@ const App = () => {
     }
   }
 
-  const createBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
+  const addBlog = (blogObject) => {
     blogService
       .create(blogObject)
       .then(() => {
         setBlogs(blogs.concat(blogObject))
-        setNewMessage(`a new blog ${newTitle} by ${newAuthor} added`)
+        setNewMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
         setTimeout(() => {
           setNewMessage(null)
         }, 2000)
-        setTitles('')
-        setAuthors('')
-        setUrls('')
       })
       .catch(error => {
         setNewMessage(error.response.data.error)
@@ -116,18 +104,6 @@ const App = () => {
     }
   }
 
-  const handleTitleChange = (event) => {
-    setTitles(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    setAuthors(event.target.value)
-  }
-
-  const handleUrlChange = (event) => {
-    setUrls(event.target.value)
-  }
-
   const handleUpdatedLikesChange = (event) => {
     setUpdatedLikes(event.target.value)
   }
@@ -158,13 +134,7 @@ const App = () => {
       <h2>Create new</h2>
       <Togglable buttonLabel="new blog">
         <BlogForm
-          onSubmit={createBlog}
-          newTitle={newTitle}
-          handleTitleChange={handleTitleChange}
-          newAuthor={newAuthor}
-          handleAuthorChange={handleAuthorChange}
-          newUrl={newUrl}
-          handleUrlChange={handleUrlChange}
+          createBlog={addBlog}
         />
       </Togglable>
 
