@@ -1,6 +1,6 @@
 const Notification = ({ message }) => {
   const style = {
-    color: 'green',
+    color: 'red',
     fontStyle: 'normal',
     fontFamily: 'Sans-Serif',
     fontSize: 16,
@@ -8,14 +8,14 @@ const Notification = ({ message }) => {
     backgroundColor: 'lightgrey',
     padding: '10px',
     fontWeight: 'bold',
-    border: '2px solid green'
+    border: '2px solid red'
   }
   if (message === null) {
     return null
   }
 
   return (
-    <div style={style}>
+    <div style={style} className='error'>
       {message}
     </div>
   )

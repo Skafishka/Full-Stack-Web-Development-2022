@@ -27,12 +27,12 @@ const Blog = ({
 
   return (
     <div>
-      <div style={hideWhenVisible} >
+      <div style={hideWhenVisible}>
         {blogs
-          .sort((a, b) => a.likes - b.likes)
+          .sort((a, b) => b.likes - a.likes)
           .map((blog, id) => (
-            <li key={id.toString()} className='blog'>
-              <b>{blog.title}</b> by {blog.author} <button onClick={toggleVisibility}>view</button>
+            <li key={id.toString()}>
+              <b>{blog.title}</b> by {blog.author} <button id='view' onClick={toggleVisibility}>view</button>
             </li>
           ))
         }
@@ -40,18 +40,18 @@ const Blog = ({
       <div style={showWhenVisible}>
         <form onSubmit={updateBlog}>
           <>
-            put new likes amount: <input value={updatedLikes} onChange={handleUpdatedLikesChange}/>
+            put new likes amount: <input id='new-likes-amount' value={updatedLikes} onChange={handleUpdatedLikesChange}/>
           </>
         </form>
         {blogs
-          .sort((a, b) => a.likes - b.likes)
+          .sort((a, b) => b.likes - a.likes)
           .map((blog, id) => (
-            <li key={id.toString()} style={blogStyle} >
+            <li key={id.toString()} style={blogStyle} className='blog'>
               <b>{blog.title}</b> by {blog.author} <button onClick={toggleVisibility}>hide blog</button>
               <ul>link: {blog.url}</ul>
-              <ul>likes: {blog.likes} <button onClick={() => updateBlog(blog.id)}>update likes</button></ul>
+              <ul>likes: {blog.likes} <button id='update-likes' onClick={() => updateBlog(blog.id)}>update likes</button></ul>
               <ul>user: {user} </ul>
-              <button onClick={() => deleteBlog(blog.id)}>remove</button>
+              <button id='delete' onClick={() => deleteBlog(blog.id)}>remove</button>
             </li>
           ))
         }
