@@ -2,5 +2,22 @@
   "dependencies": {
     "apollo-server": "^3.11.1",
     "graphql": "^16.6.0"
-  }
+  },
+  "name": "graphql",
+  "version": "0.0.1",
+  "description": "the part of course is about graphql",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skafishka/Full-Stack-Web-Development-2022.git#main"
+  },
+  "author": "Sergei Kolygin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skafishka/Full-Stack-Web-Development-2022/issues"
+  },
+  "homepage": "https://github.com/Skafishka/Full-Stack-Web-Development-2022/tree/main#readme"
 }
