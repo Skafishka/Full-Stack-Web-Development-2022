@@ -120,7 +120,11 @@ const resolvers = {
   },
   Author: {
     name: (root) => root.name,
-    bookCount: (root, args) => books.find(q => q.author === args.name)
+    bookCount: (root) => {
+      let count = 0
+      books.find(q => q.author === root.name ? count++ : count)
+      return count
+    }
   }
 }
 
