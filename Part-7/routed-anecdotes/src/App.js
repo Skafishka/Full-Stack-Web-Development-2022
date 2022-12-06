@@ -2,7 +2,8 @@ import { useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes, Route, Link,
-  useParams
+  useParams,
+  useNavigate,
 } from "react-router-dom"
 
 const Menu = () => {
@@ -31,7 +32,7 @@ const AnecdoteList = ({ anecdotes }) => (
   </div>
 )
 
-const Anecdote = ({ anecdotes, vote }) => {
+const Anecdote = ({ anecdotes }) => {
   const id = useParams().id
   const anecdote = anecdotes.find(q => q.id === Number(id))
   return (
@@ -69,7 +70,8 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
+  
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -79,6 +81,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    navigate('/')
   }
 
   return (
@@ -101,7 +104,6 @@ const CreateNew = (props) => {
       </form>
     </div>
   )
-
 }
 
 const App = () => {
@@ -127,6 +129,8 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote ${anecdote.content} created!`)
+    setTimeout(() => setNotification(null), 5000)
   }
 
   const anecdoteById = (id) =>
@@ -148,16 +152,13 @@ const App = () => {
       <div>
         <h1>Software anecdotes</h1>
         <Menu />
-      </div>
-
-      <Routes>
-        <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} vote={vote}/>} />
-        <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
-        <Route path="/create" element={<CreateNew addNew={addNew} />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-
-      <div>
+        {notification ? notification : null}
+        <Routes>
+          <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} vote={vote}/>} />
+          <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
+          <Route path="/create" element={<CreateNew addNew={addNew} />} />
+          <Route path="/about" element={<About />} />
+        </Routes>     
         <Footer />
       </div>
     </Router>
