@@ -8,17 +8,17 @@ interface WeekValues {
     answer7: string
 }
 
-const printOut = (args: Array<number>): WeekValues => {
+const printOut = (args: Array<string>): WeekValues => {
     let activeDays = 0;
     let workingHours = 0;
     for (let day of args) {
-        workingHours += day;
-        if (day > 0) {
+        workingHours += Number(day);
+        if (Number(day) > 0) {
             activeDays += 1;
         }
     }
-    workingHours = workingHours / 7;
-    let target = 4;
+    workingHours = workingHours / args.length;
+    let target = 2;
     let rating = workingHours * 100 / target;
     let statement = 'Not bad';
     if (rating < 100) {
@@ -29,9 +29,9 @@ const printOut = (args: Array<number>): WeekValues => {
     the number of days: ${args.length}, 
     the number of training days: ${activeDays}, 
     the original target value: ${target} h., 
-    the calculated average time: ${workingHours} h., 
+    the calculated average time: ${workingHours} h./day, 
     if the target was reached: ${workingHours > target}, 
-    how well the hours are met: ${rating}%, 
+    how well the hours are met: ${rating} %, 
     explaining the rating: ${statement}`)
 
     return {
@@ -46,7 +46,8 @@ const printOut = (args: Array<number>): WeekValues => {
 }
 
 try {
-    (printOut([0, 1, 2, 3, 4, 5, 6]))
+    (printOut(process.argv.slice(2))
+    )
 } catch (error: unknown) {
     let errorMessage = 'Something bad happened.'
     if (error instanceof Error) {

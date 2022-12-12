@@ -15,7 +15,7 @@ const parseArguments = (args: Array<string>): Values => {
 }
 
 const calculateBmi = (height: number, mass: number) => {
-    const midResult = mass / height;
+    const midResult = mass / (height * height / 10000);
     let printText: String;
     if (midResult < 25) {
         printText = "Normal"
@@ -28,7 +28,8 @@ const calculateBmi = (height: number, mass: number) => {
 }
 
 try {
-    (calculateBmi(180, 74));
+    const { value1, value2 } = parseArguments(process.argv);
+    calculateBmi(value1, value2);
 } catch (error: unknown) {
     let errorMessage = 'Something bad happened.'
     if (error instanceof Error) {
