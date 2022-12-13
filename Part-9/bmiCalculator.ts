@@ -16,7 +16,7 @@ const parseArguments = (args: Array<string>): Values => {
 
 const calculateBmi = (height: number, mass: number) => {
     const midResult = mass / (height * height / 10000);
-    let printText: String;
+    let printText = '';
     if (midResult < 25) {
         printText = "Normal"
     } else if (midResult >= 25 && midResult <= 29) {
@@ -24,7 +24,7 @@ const calculateBmi = (height: number, mass: number) => {
     } else if (midResult >= 30) {
         printText = "Obese"
     }
-    return console.log(`${printText} (healthy weight)`);
+    return (`${printText} (healthy weight)`);
 }
 
 try {
@@ -37,3 +37,5 @@ try {
     }
     console.log(errorMessage);
 }
+
+export { calculateBmi }
