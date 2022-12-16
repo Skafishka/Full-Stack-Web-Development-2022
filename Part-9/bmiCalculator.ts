@@ -8,34 +8,34 @@ const parseArguments = (args: Array<string>): Values => {
         return {
             value1: Number(args[2]),
             value2: Number(args[3])    
-        }
+        };
     } else {
-        throw new Error('Provided values were not numbers!')
+        throw new Error('Provided values were not numbers!');
     }
-}
+};
 
 const calculateBmi = (height: number, mass: number) => {
     const midResult = mass / (height * height / 10000);
     let printText = '';
     if (midResult < 25) {
-        printText = "Normal"
+        printText = "Normal";
     } else if (midResult >= 25 && midResult <= 29) {
-        printText = "Overweight"
+        printText = "Overweight";
     } else if (midResult >= 30) {
-        printText = "Obese"
+        printText = "Obese";
     }
     return (`${printText} (healthy weight)`);
-}
+};
 
 try {
     const { value1, value2 } = parseArguments(process.argv);
     calculateBmi(value1, value2);
 } catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
         errorMessage += ' Error: ' + error.message;
     }
     console.log(errorMessage);
 }
 
-export { calculateBmi }
+export { calculateBmi };

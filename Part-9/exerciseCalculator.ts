@@ -8,21 +8,20 @@ interface WeekValues {
     answer7: string
 }
 
-const printOut = (args: Array<string>): WeekValues => {
+const printOut = (args: Array<string>, target: number): WeekValues => {
     let activeDays = 0;
     let workingHours = 0;
-    for (let day of args) {
+    for (const day of args) {
         workingHours += Number(day);
         if (Number(day) > 0) {
             activeDays += 1;
         }
     }
     workingHours = workingHours / args.length;
-    let target = 2;
-    let rating = workingHours * 100 / target;
+    const rating = workingHours * 100 / target;
     let statement = 'Not bad';
     if (rating < 100) {
-        statement = 'Keep going ahead!'
+        statement = 'Keep going ahead!';
     }
     
     console.log(`
@@ -32,7 +31,7 @@ const printOut = (args: Array<string>): WeekValues => {
     the calculated average time: ${workingHours} h./day, 
     if the target was reached: ${workingHours > target}, 
     how well the hours are met: ${rating} %, 
-    explaining the rating: ${statement}`)
+    explaining the rating: ${statement}`);
 
     return {
         answer1: Number(args.length),
@@ -42,16 +41,18 @@ const printOut = (args: Array<string>): WeekValues => {
         answer5: Boolean(workingHours > target),
         answer6: Number(rating),
         answer7: String(statement)
-    }
-}
+    };
+};
 
 try {
-    (printOut(process.argv.slice(2))
-    )
+    (printOut(process.argv.slice(2), 2)
+    );
 } catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
         errorMessage += ' Error: ' + error.message;
     }
     console.log(errorMessage);
 }
+
+export { printOut };
