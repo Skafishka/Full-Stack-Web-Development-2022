@@ -1,9 +1,21 @@
 import patients from '../../data/patients';
+import { NonSSNPatientsEntry, PatientsEntry, NewPatientEntry } from '../types';
+import { v1 as uuid } from 'uuid';
 
-import { NonSSNPatientsEntry } from '../types';
+//const id = uuid();
 
 const getPatientEntries = (): NonSSNPatientsEntry[] => {
     return patients;
 };
 
-export default { getPatientEntries };
+const addPatient = ( entry: NewPatientEntry ): PatientsEntry => {
+    const newPatientEntry = {
+        id: uuid(),
+        ...entry
+    };
+
+    patients.push(newPatientEntry);
+    return newPatientEntry;
+};
+
+export default { getPatientEntries, addPatient };
