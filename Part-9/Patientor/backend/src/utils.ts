@@ -1,4 +1,4 @@
-import { NewPatientEntry, Gender } from './types';
+import { NewPatientEntry, Gender, Entry } from './types';
 
 const isString = (text: unknown): text is string => {
     return typeof text === 'string' || text instanceof String;
@@ -49,6 +49,14 @@ const parseOccupation = (occupation: unknown): string => {
     return occupation;
 };
 
+const parseEntries = (entries: unknown): Entry[] => {
+    if (!entries || !isString(entries)) {
+        throw new Error('Incorrect or missing entries');
+    }
+
+    return [entries];
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const toNewPatientEntry = (object: any): NewPatientEntry => {
     const newEntry: NewPatientEntry = {
@@ -56,7 +64,8 @@ const toNewPatientEntry = (object: any): NewPatientEntry => {
         dateOfBirth: parseDoB(object.dateOfBirth),
         ssn: parseSSN(object.ssn),
         gender: parseGender(object.gender),
-        occupation: parseOccupation(object.occupation)
+        occupation: parseOccupation(object.occupation),
+        entries: parseEntries(object.entries)
     };
 
     return newEntry;
